@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#121212">
+    <title>عيد ميلاد سعيد ميس آية</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        @media (max-width: 768px) {
+            body {
+                -webkit-text-size-adjust: 100%;
+            }
+            
+          
+            .touch-active {
+                transform: scale(0.95) !important;
+                opacity: 0.9;
+            }
+            
+       
+            button {
+                min-height: 44px;
+                margin: 8px 0;
+            }
+            
+          
+            input[type="text"] {
+                min-height: 44px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+   
+        <div id="welcome-screen" class="screen active">
+            <div class="birthday-decoration">
+                <div class="balloon-container"></div>
+                <h1><i class="fas fa-birthday-cake"></i> عيد ميلاد سعيد ميس آية <i class="fas fa-gift"></i></h1>
+                <div class="birthday-message">
+                    <p>كل عام وأنتِ بخير ميس آية! هذه هدية بسيطة من طلابك المحبين</p>
+                </div>
+            </div>
+            <div class="form-container">
+                <h2>أدخل اسمك</h2>
+                <input type="text" id="student-name" placeholder="اسم الطالب">
+                <button id="start-btn">بدء الاختبار</button>
+            </div>
+        </div>
+
+ 
+        <div id="quiz-screen" class="screen">
+            <h1><i class="fas fa-microscope"></i> اختبار مادة الأحياء <i class="fas fa-graduation-cap"></i></h1>
+            <div class="birthday-subtitle">هدية عيد ميلاد ميس آية</div>
+            <div id="question-container">
+                <h2 id="question-text"></h2>
+                <div id="options-container"></div>
+            </div>
+        </div>
+
+        <div id="result-screen" class="screen">
+            <h1><i class="fas fa-award"></i> نتيجة الاختبار <i class="fas fa-star"></i></h1>
+            <div class="birthday-subtitle">هدية عيد ميلاد ميس آية</div>
+            <div class="result-container">
+                <div id="gauge-container">
+                    <div class="gauge">
+                        <h2 id="score-percentage">0%</h2>
+                        <h3 id="score-text">جيد</h3>
+                        <div id="score-details"></div>
+                        <div id="prize-message">جائزتك جاهزة</div>
+                    </div>
+                </div>
+            </div>
+            <div id="confetti-container"></div>
+            <button id="next-to-gallery">التالي</button>
+        </div>
+
+        
+        <div id="gallery-screen" class="screen">
+            <h1><i class="fas fa-images"></i> معرض صور المدرسة <i class="fas fa-camera"></i></h1>
+            <div class="birthday-subtitle">ذكريات جميلة مع ميس آية</div>
+            <div class="slider-container">
+                <div class="slider">
+              
+                </div>
+            </div>
+            <button id="next-to-camera">التالي</button>
+        </div>
+
+      
+        <div id="camera-screen" class="screen">
+            <h1><i class="fas fa-camera-retro"></i> التقط صورة تذكارية <i class="fas fa-smile"></i></h1>
+            <div class="birthday-subtitle">أرسل تهنئة لميس آية</div>
+            <div class="camera-container">
+                <video id="video" autoplay playsinline></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+                <div class="camera-controls">
+                    <button id="capture-btn"><i class="fas fa-camera"></i> التقاط صورة</button>
+                    <button id="send-btn" disabled><i class="fas fa-paper-plane"></i> إرسال</button>
+                </div>
+                <div id="photo-preview"></div>
+            </div>
+            <div id="completion-message" style="display: none;">
+                <h2><i class="fas fa-check-circle"></i> تم الإرسال بنجاح!</h2>
+                <p>شكراً لك على المشاركة في عيد ميلاد ميس آية</p>
+                <div class="final-birthday-message">
+                    <h3>كل عام وميس آية بألف خير!</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+</html> 
