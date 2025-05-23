@@ -172,7 +172,8 @@ async function startCamera() {
 
         const video = document.getElementById('camera-preview');
         video.srcObject = stream;
-        video.className = facingMode === "environment" ? "flipped" : "";
+        video.className = facingMode === "user" ? "flipped" : "";
+
     } catch (err) {
         console.error('خطأ في تشغيل الكاميرا:', err);
         alert('لا يمكن الوصول إلى الكاميرا');
@@ -198,12 +199,13 @@ function capturePhoto() {
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext('2d');
     
-    if (facingMode === "environment") {
+    if (facingMode === "user") {
         ctx.scale(-1, 1);
         ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
     } else {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     }
+    
 
     capturedImage.src = canvas.toDataURL('image/jpeg');
     capturedImage.className = facingMode === "environment" ? "flipped" : "";
