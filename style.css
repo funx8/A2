@@ -182,7 +182,7 @@ h1, h2 {
 }
 
 #camera-preview.flipped {
-    transform: scaleX(1);
+    transform: scaleX(-1);
 }
 
 #captured-image {
@@ -194,7 +194,7 @@ h1, h2 {
 }
 
 #captured-image.flipped {
-    transform: scaleX(1);
+    transform: scaleX(-1);
 }
 
 .camera-controls {
