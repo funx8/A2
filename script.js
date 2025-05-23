@@ -172,7 +172,7 @@ async function startCamera() {
 
         const video = document.getElementById('camera-preview');
         video.srcObject = stream;
-        video.className = isCameraFlipped ? 'flipped' : '';
+        video.className = facingMode === "environment" ? "flipped" : "";
     } catch (err) {
         console.error('خطأ في تشغيل الكاميرا:', err);
         alert('لا يمكن الوصول إلى الكاميرا');
@@ -181,7 +181,6 @@ async function startCamera() {
 
 // تبديل الكاميرا
 async function flipCamera() {
-    isCameraFlipped = !isCameraFlipped;
     facingMode = facingMode === "user" ? "environment" : "user";
     await startCamera();
 }
@@ -199,7 +198,7 @@ function capturePhoto() {
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext('2d');
     
-    if (isCameraFlipped) {
+    if (facingMode === "user") {
         ctx.scale(-1, 1);
         ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
     } else {
@@ -207,7 +206,7 @@ function capturePhoto() {
     }
 
     capturedImage.src = canvas.toDataURL('image/jpeg');
-    capturedImage.className = isCameraFlipped ? 'flipped' : '';
+    capturedImage.className = facingMode === "environment" ? "flipped" : "";
     
     video.style.display = 'none';
     capturedImage.style.display = 'block';
