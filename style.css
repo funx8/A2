@@ -178,11 +178,11 @@ h1, h2 {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    transform: scaleX(-1);
+    transform: scaleX(1);
 }
 
 #camera-preview.flipped {
-    transform: scaleX(1);
+    transform: scaleX(-1);
 }
 
 #captured-image {
@@ -194,7 +194,7 @@ h1, h2 {
 }
 
 #captured-image.flipped {
-    transform: scaleX(1);
+    transform: scaleX(-1);
 }
 
 .camera-controls {
