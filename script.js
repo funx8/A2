@@ -198,15 +198,12 @@ function capturePhoto() {
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext('2d');
     
-    if (facingMode === "environment") {
-        ctx.scale(-1, 1);
-        ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
-    } else {
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    }
+    // التقاط الصورة كما تظهر في الشاشة بدون عكس
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     capturedImage.src = canvas.toDataURL('image/jpeg');
-    capturedImage.className = facingMode === "environment" ? "flipped" : "";
+    // عرض الصورة كما تم التقاطها بدون عكس
+    capturedImage.className = "";
     
     video.style.display = 'none';
     capturedImage.style.display = 'block';
