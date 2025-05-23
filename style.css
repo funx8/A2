@@ -194,7 +194,7 @@ h1, h2 {
 }
 
 #captured-image.flipped {
-    transform: scaleX(-1);
+    transform: scaleX(1);
 }
 
 .camera-controls {
