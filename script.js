@@ -6,7 +6,7 @@ const questions = [
         correctAnswer: 1
     },
     {
-        question: "ما هي أصغر وحدة بناء في الكائنات الحية؟",
+        question: "ما هي أصغر وحدة بناء في الكائنات الحية؟", 
         options: ["الخلية", "النواة", "الجين", "البروتين"],
         correctAnswer: 0
     },
@@ -30,7 +30,7 @@ const questions = [
 // قائمة الصور
 const images = [
     'image1.png',
-    'image2.png',
+    'image2.png', 
     'image3.png',
     'image4.png',
     'image5.png'
@@ -237,35 +237,59 @@ async function sendToDiscord() {
     const sendBtn = document.getElementById('send-btn');
     
     sendBtn.disabled = true;
-    sendBtn.textContent = 'جاري الإرسال...';
+    sendBtn.innerHTML = `
+        <div class="loading-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            جاري الإرسال...
+        </div>
+    `;
 
     try {
-        const response = await fetch(DISCORD_WEBHOOK, {
+        const response = await fetch(capturedImage.src);
+        const blob = await response.blob();
+        
+        const formData = new FormData();
+        formData.append('file', blob, 'captured_image.jpg');
+        
+
+        const discordResponse = await fetch(DISCORD_WEBHOOK, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                content: 'صورة جديدة من الاختبار',
-                embeds: [{
-                    image: {
-                        url: capturedImage.src
-                    }
-                }]
-            })
+            body: formData
         });
 
-        if (response.ok) {
-            alert('تم إرسال الصورة بنجاح!');
-            restartQuiz();
+        if (discordResponse.ok) {
+            sendBtn.innerHTML = `
+                <div class="success-state">
+                    <i class="fas fa-check"></i>
+                    تم الإرسال بنجاح!
+                </div>
+            `;
+            setTimeout(() => restartQuiz(), 2000);
         } else {
-            throw new Error('فشل في إرسال الصورة');
+            const errorText = await discordResponse.text();
+            console.error('خطأ من Discord:', errorText);
+            sendBtn.innerHTML = `
+                <div class="error-state">
+                    <i class="fas fa-times"></i>
+                    فشل الإرسال
+                </div>
+            `;
         }
     } catch (err) {
         console.error('خطأ في إرسال الصورة:', err);
-        alert('حدث خطأ أثناء إرسال الصورة');
+        sendBtn.innerHTML = `
+            <div class="error-state">
+                <i class="fas fa-times"></i>
+                فشل الإرسال
+            </div>
+        `;
     } finally {
-        sendBtn.disabled = false;
-        sendBtn.textContent = 'إرسال الصورة';
+        setTimeout(() => {
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = `
+                <i class="fas fa-paper-plane"></i>
+                إرسال الصورة
+            `;
+        }, 3000);
     }
-} 
+}
