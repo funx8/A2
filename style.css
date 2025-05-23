@@ -173,16 +173,27 @@ h1, h2 {
     overflow: hidden;
 }
 
-#camera-preview, #captured-image {
+#camera-preview {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transform: scaleX(-1);
+}
+
+#camera-preview.flipped {
+    transform: scaleX(1);
+}
+
+#captured-image {
     width: 100%;
     max-width: 100%;
     height: auto;
     border-radius: 10px;
     transform: scaleX(1);
-    transition: transform 0.3s;
 }
 
-#camera-preview.flipped, #captured-image.flipped {
+#captured-image.flipped {
     transform: scaleX(-1);
 }
 
