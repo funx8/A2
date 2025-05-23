@@ -172,7 +172,7 @@ async function startCamera() {
 
         const video = document.getElementById('camera-preview');
         video.srcObject = stream;
-        video.className = facingMode === "environment" ? "flipped" : "";
+        video.className = "";
     } catch (err) {
         console.error('خطأ في تشغيل الكاميرا:', err);
         alert('لا يمكن الوصول إلى الكاميرا');
