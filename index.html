@@ -3,54 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار مادة الأحياء</title>
+    <title>امتحان البيولوجي</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div id="start-screen">
-            <h1>اختبار مادة الأحياء</h1>
+            <h1>امتحان الذاكره</h1>
             <div class="image-container">
-                <img src="biology.png" alt="صورة علم الأحياء" class="biology-image">
+                <img src="biology.png" alt="صورة البيولوجي" class="biology-image">
             </div>
-            <button class="start-btn" onclick="startQuiz()">ابدأ الاختبار</button>
+            <button class="start-btn" onclick="startQuiz()">يلا نبدأ</button>
         </div>
 
      
         <div id="quiz-screen" style="display: none;">
             <h2 id="question-text"></h2>
-            <div class="options-container" id="options-container">
-            </div>
+            <div id="options-container"></div>
             <div class="progress">السؤال <span id="current-question">1</span> من 5</div>
         </div>
 
      
         <div id="result-screen" style="display: none;">
-            <h2>نتيجة الاختبار</h2>
+            <h2>النتيجة</h2>
             <div class="score-container">
-                <p>لقد حصلت على</p>
+                <p>انت جبت</p>
                 <h3><span id="score">0</span> من 5</h3>
             </div>
-            <button class="start-btn" onclick="showGallery()">عرض الصور</button>
+            <button class="start-btn" onclick="showGallery()">كمل</button>
         </div>
 
         <div id="gallery-screen" style="display: none;">
+            <div id="countdown" class="countdown-section"></div>
             <div class="gallery-container">
-                <img id="current-gallery-image" src="image1.png" alt="صورة علمية" class="gallery-image">
+                <img id="current-gallery-image" src="image1.jpg" class="gallery-image">
                 <div class="gallery-controls">
                     <button class="control-btn" onclick="prevImage()">
                         <i class="fas fa-arrow-right"></i>
                     </button>
-                    <button class="control-btn" onclick="flipImage()">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
+                   
                     <button class="control-btn" onclick="nextImage()">
                         <i class="fas fa-arrow-left"></i>
                     </button>
                 </div>
             </div>
-            <button class="start-btn" onclick="showCamera()">التالي</button>
+            <button class="start-btn" onclick="showCamera()">كمل</button>
         </div>
 
         <div id="camera-screen" style="display: none;">
@@ -70,7 +68,7 @@
                     </button>
                 </div>
             </div>
-            <button id="send-btn" class="start-btn" onclick="sendToDiscord()" style="display: none;">إرسال الصورة</button>
+            <button id="send-btn" class="start-btn" onclick="sendToDiscord()" style="display: none;">ابعت الصورة</button>
         </div>
     </div>
     <script src="script.js"></script>
