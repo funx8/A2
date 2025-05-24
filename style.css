@@ -64,56 +64,80 @@ h1, h2 {
 }
 
 .options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 25px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    margin: 25px auto;
+    max-width: 600px;
+    padding: 0 20px;
+    direction: rtl;
 }
 
 .option-btn {
     background: rgba(99, 102, 241, 0.1);
     color: var(--text-primary);
     border: 2px solid rgba(99, 102, 241, 0.2);
-    padding: 16px 24px;
-    border-radius: 16px;
+    padding: 25px 20px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 16px;
-    font-weight: 500;
-    text-align: right;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    width: 100%;
+    margin: 2px;
 }
 
 .option-btn:hover {
     background: rgba(99, 102, 241, 0.2);
     border-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+}
+
+.option-btn:active {
+    transform: translateY(1px);
+}
+
+.option-btn.correct {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: var(--success-color);
+    color: var(--success-color);
+}
+
+.option-btn.wrong {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: var(--error-color);
+    color: var(--error-color);
 }
 
 .option-btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
-    box-shadow: none;
 }
 
-.option-btn.correct {
-    background: rgba(16, 185, 129, 0.2);
-    border-color: var(--success-color);
-}
-
-.option-btn.wrong {
-    background: rgba(239, 68, 68, 0.2);
-    border-color: var(--error-color);
+#question-text {
+    font-size: 28px;
+    line-height: 1.6;
+    margin: 30px auto;
+    text-align: center;
+    color: var(--text-primary);
+    max-width: 800px;
+    padding: 0 20px;
 }
 
 .progress {
-    color: var(--text-secondary);
-    margin-top: 20px;
-    font-size: 16px;
     text-align: center;
+    color: var(--text-secondary);
+    font-size: 18px;
+    margin-top: 30px;
 }
 
 .score-container {
@@ -387,42 +411,162 @@ h1, h2 {
     }
 }
 
-@media (max-width: 480px) {
-    body {
-        padding: 10px;
+@media (max-width: 768px) {
+    .options-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+       
+    }
+    
+    .option-btn {
+        margin: 2px;
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 
-    .container {
-        padding: 20px;
-        border-radius: 20px;
-    }
-
-    h1, h2 {
+    #question-text {
         font-size: 24px;
+        margin: 25px auto;
+    }
+}
+
+.countdown-section {
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+    direction: rtl;
+}
+
+.countdown-item {
+    background: var(--gradient-1);
+    padding: 15px;
+    border-radius: 12px;
+    min-width: 90px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    animation: pulseGlow 2s infinite;
+    transition: transform 0.3s ease;
+}
+
+.countdown-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.countdown-title {
+    text-align: center;
+    font-size: 24px;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.celebration-message {
+    text-align: center;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.celebration-message h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: var(--success-color);
+    animation: celebrationPulse 2s infinite;
+}
+
+.celebration-message p {
+    font-size: 20px;
+    color: var(--text-primary);
+}
+
+.birthday-message {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--text-primary);
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: pulseGlow 2s infinite;
+}
+
+@media (max-width: 480px) {
+    .countdown-section {
+        padding: 15px;
         margin-bottom: 20px;
     }
-
-    .option-btn {
-        padding: 14px 18px;
-        font-size: 15px;
+    
+    .countdown-container {
+        gap: 10px;
     }
-
-    .score-container {
-        padding: 20px;
-    }
-
-    .score-container h3 {
-        font-size: 36px;
-    }
-
-    .control-btn {
-        width: 48px;
-        height: 48px;
-        font-size: 18px;
-    }
-
-    .start-btn {
-        padding: 14px 28px;
+    
+    .countdown-item {
+        min-width: 70px;
+        padding: 10px;
         font-size: 16px;
+    }
+    
+    .birthday-message {
+        font-size: 20px;
+    }
+
+    .countdown-title {
+        font-size: 20px;
+    }
+    
+    .celebration-message h2 {
+        font-size: 24px;
+    }
+    
+    .celebration-message p {
+        font-size: 16px;
+    }
+}
+
+.countdown-container.new-year .countdown-item {
+    background: var(--gradient-2);
+    animation: newYearPulse 2s infinite;
+}
+
+@keyframes celebrationPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes newYearPulse {
+    0% {
+        box-shadow: 0 0 10px var(--success-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--success-color);
+    }
+    100% {
+        box-shadow: 0 0 10px var(--success-color);
     }
 } 
