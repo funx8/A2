@@ -295,7 +295,18 @@ function retryPhoto() {
     sendBtn.style.display = 'none';
 }
 function restartCamera() {
-    retryPhoto();
+    const video = document.getElementById('camera-preview');
+    const capturedImage = document.getElementById('captured-image');
+    const captureBtn = document.querySelector('.control-btn[onclick="capturePhoto()"]');
+    const retryBtn = document.querySelector('.control-btn[onclick="retryPhoto()"]');
+    const sendBtn = document.getElementById('send-btn');
+    
+    video.style.display = 'block';
+    capturedImage.style.display = 'none';
+    captureBtn.style.display = 'block';
+    retryBtn.style.display = 'none';
+    sendBtn.style.display = 'none';
+    
     if (stream) {
         stream.getTracks().forEach(track => track.stop());
     }
