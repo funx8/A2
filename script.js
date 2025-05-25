@@ -44,13 +44,19 @@ let isCameraFlipped = false;
 let facingMode = "user";
 const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1375095333016703028/n_eMgBSWA4Z6bF8NrBosWslSFX-f5_T2EjTkX_HZFDs8xGE8DPGW4bkF9tL4NQh9eKKt";
 
-// تعديل متغيرات العداد
+
 let countdownInterval;
-const endDate = new Date('2024-12-31 23:59:59').getTime();
+const endDate = new Date(new Date().getFullYear(), 4, 26).getTime(); 
 
 function updateCountdown() {
     const now = new Date().getTime();
-    const timeLeft = endDate - now;
+    let timeLeft = endDate - now;
+    
+    
+    if (timeLeft < 0) {
+        const nextYear = new Date().getFullYear() + 1;
+        timeLeft = new Date(nextYear, 4, 26).getTime() - now;
+    }
     
     if (timeLeft > 0) {
         const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
@@ -59,58 +65,23 @@ function updateCountdown() {
         const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
         
         document.getElementById('countdown').innerHTML = `
-            <div class="countdown-title">الوقت المتبقي حتى نهاية عام 2024</div>
+            <div class="countdown-title">الوقت المتبقي حتى عيد الميلاد 🎂</div>
             <div class="countdown-container">
-                <div class="countdown-item">${days} يوم</div>
-                <div class="countdown-item">${hours} ساعة</div>
-                <div class="countdown-item">${minutes} دقيقة</div>
-                <div class="countdown-item">${seconds} ثانية</div>
+                <div class="countdown-item">${days} يوم ${hours} ساعة</div>
+                <div class="countdown-item"> ${seconds} ثانية ${minutes} دقيقة</div>
+              
             </div>
+            <div class="birthday-message">26 مايو 1991</div>
         `;
     } else {
         clearInterval(countdownInterval);
-        
-        // بداية العد من الصفر للسنة الجديدة
-        const newYearTime = new Date().getTime() - endDate;
-        const newYearDays = Math.floor(newYearTime / (1000 * 60 * 60 * 24));
-        const newYearHours = Math.floor((newYearTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const newYearMinutes = Math.floor((newYearTime % (1000 * 60 * 60)) / (1000 * 60));
-        const newYearSeconds = Math.floor((newYearTime % (1000 * 60)) / 1000);
-        
         document.getElementById('countdown').innerHTML = `
             <div class="celebration-message">
-                <h2>كل عام وأنت طيبة يا مس آية قنديل! 🎉</h2>
-                <p>مر على العام الجديد:</p>
-            </div>
-            <div class="countdown-container new-year">
-                <div class="countdown-item">${newYearDays} يوم</div>
-                <div class="countdown-item">${newYearHours} ساعة</div>
-                <div class="countdown-item">${newYearMinutes} دقيقة</div>
-                <div class="countdown-item">${newYearSeconds} ثانية</div>
+                <h2>عيد ميلاد سعيد! 🎉🎂</h2>
+                <p>كل عام وأنتِ بخير يا مس آية قنديل!</p>
+                <div class="birthday-message">26 مايو 1991</div>
             </div>
         `;
-        
-        // استمرار العد في السنة الجديدة
-        countdownInterval = setInterval(() => {
-            const currentTime = new Date().getTime() - endDate;
-            const days = Math.floor(currentTime / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((currentTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((currentTime % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((currentTime % (1000 * 60)) / 1000);
-            
-            document.getElementById('countdown').innerHTML = `
-                <div class="celebration-message">
-                    <h2>كل عام وأنت طيبة يا مس آية قنديل! 🎉</h2>
-                    <p>مر على العام الجديد:</p>
-                </div>
-                <div class="countdown-container new-year">
-                    <div class="countdown-item">${days} يوم</div>
-                    <div class="countdown-item">${hours} ساعة</div>
-                    <div class="countdown-item">${minutes} دقيقة</div>
-                    <div class="countdown-item">${seconds} ثانية</div>
-                </div>
-            `;
-        }, 1000);
     }
 }
 
@@ -123,7 +94,7 @@ function startQuiz() {
     document.getElementById('start-screen').style.display = 'none';
     document.getElementById('quiz-screen').style.display = 'block';
     showQuestion();
-    startCountdown(); // بدء العداد
+    startCountdown(); 
 }
 
 function showQuestion() {
@@ -269,7 +240,7 @@ function showGallery() {
     document.getElementById('result-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
     updateGalleryImage();
-    startCountdown(); // بدء العداد عند عرض صفحة الصور
+    startCountdown();
 }
 
 function updateGalleryImage() {
@@ -304,7 +275,7 @@ function restartQuiz() {
 }
 
 function showCamera() {
-    clearInterval(countdownInterval); // إيقاف العداد عند الانتقال لصفحة الكاميرا
+    clearInterval(countdownInterval); 
     document.getElementById('gallery-screen').style.display = 'none';
     document.getElementById('camera-screen').style.display = 'block';
     startCamera();
