@@ -260,7 +260,7 @@ h1, h2 {
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
-    margin-top: 25vh;
+    margin-top: 40px;
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     position: relative;
     overflow: hidden;
