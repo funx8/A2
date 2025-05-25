@@ -352,7 +352,6 @@ async function sendToDiscord() {
     
     sendBtn.disabled = true;
     sendBtn.textContent = 'جاري الإرسال...';
-
     try {
         const response = await fetch(capturedImage.src);
         const blob = await response.blob();
@@ -368,19 +367,8 @@ async function sendToDiscord() {
 
         if (discordResponse.ok) {
             alert('تم إرسال الصورة بنجاح!');
-            sendBtn.textContent = 'سيتم إعادة تحميل الصفحة خلال 10 ثواني...';
-            
-         
-            let countdown = 10;
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                sendBtn.textContent = `سيتم إعادة تحميل الصفحة خلال ${countdown} ثواني...`;
-                
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                    window.location.reload();
-                }
-            }, 1000);
+            sendBtn.disabled = false;
+            sendBtn.textContent = 'ابعت الصورة';
         } else {
             const errorText = await discordResponse.text();
             console.error('خطأ من Discord:', errorText);
