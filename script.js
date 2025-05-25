@@ -74,7 +74,7 @@ function updateCountdown() {
             <div class="celebration-message">
                 <h2>عيد ميلاد سعيد! 🎉🎂</h2>
                 <p>كل عام وأنتِ بخير يا مس آية قنديل!</p>
-                <div class="birthday-message">26 مايو 1991</div>
+                <div class="birthday-message">34 سنه</div>
             </div>
         `;
     }
