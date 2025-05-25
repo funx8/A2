@@ -62,7 +62,6 @@ function updateCountdown() {
         document.getElementById('countdown').innerHTML = `
             <div class="countdown-title">الوقت المتبقي حتى عيد الميلاد 🎂</div>
             <div class="countdown-container">
-                <div class="countdown-item">${days} يوم</div>
                 <div class="countdown-item">${hours} ساعة</div>
                 <div class="countdown-item">${minutes} دقيقة</div>
                 <div class="countdown-item">${seconds} ثانية</div>
