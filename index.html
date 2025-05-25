@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        
+        <div id="countdown" class="countdown-section"></div>
         
         <div id="start-screen">
             <h1>امتحان الذاكره</h1>
@@ -37,7 +37,6 @@
         </div>
 
         <div id="gallery-screen" style="display: none;">
-            <div id="countdown" class="countdown-section"></div>
             <div class="gallery-container">
                 <img id="current-gallery-image" src="image1.jpg" class="gallery-image">
                 <div class="gallery-controls">
@@ -71,6 +70,7 @@
                 </div>
             </div>
             <button id="send-btn" class="start-btn" onclick="sendToDiscord()" style="display: none;">ابعت الصورة</button>
+            <button id="retry-camera-btn" class="retry-btn" onclick="restartCamera()">اعادة المحاولة</button>
         </div>
     </div>
     <script src="script.js"></script>
