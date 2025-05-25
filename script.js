@@ -44,14 +44,12 @@ let isCameraFlipped = false;
 let facingMode = "user";
 const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1375095333016703028/n_eMgBSWA4Z6bF8NrBosWslSFX-f5_T2EjTkX_HZFDs8xGE8DPGW4bkF9tL4NQh9eKKt";
 
-
 let countdownInterval;
 const endDate = new Date(new Date().getFullYear(), 4, 26).getTime(); 
 
 function updateCountdown() {
     const now = new Date().getTime();
     let timeLeft = endDate - now;
-    
     
     if (timeLeft < 0) {
         const nextYear = new Date().getFullYear() + 1;
@@ -67,9 +65,10 @@ function updateCountdown() {
         document.getElementById('countdown').innerHTML = `
             <div class="countdown-title">الوقت المتبقي حتى عيد الميلاد 🎂</div>
             <div class="countdown-container">
-                <div class="countdown-item">${days} يوم ${hours} ساعة</div>
-                <div class="countdown-item"> ${seconds} ثانية ${minutes} دقيقة</div>
-              
+                <div class="countdown-item">${days} يوم</div>
+                <div class="countdown-item">${hours} ساعة</div>
+                <div class="countdown-item">${minutes} دقيقة</div>
+                <div class="countdown-item">${seconds} ثانية</div>
             </div>
             <div class="birthday-message">26 مايو 1991</div>
         `;
@@ -240,7 +239,7 @@ function showGallery() {
     document.getElementById('result-screen').style.display = 'none';
     document.getElementById('gallery-screen').style.display = 'block';
     updateGalleryImage();
-    startCountdown();
+    startCountdown(); 
 }
 
 function updateGalleryImage() {
@@ -346,19 +345,36 @@ function retryPhoto() {
     sendBtn.style.display = 'none';
 }
 
+function restartCamera() {
+   
+    retryPhoto();
+    
+    
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
+    
+
+    facingMode = "user";
+    
+  
+    startCamera();
+}
+
 async function sendToDiscord() {
     const capturedImage = document.getElementById('captured-image');
     const sendBtn = document.getElementById('send-btn');
     
     sendBtn.disabled = true;
     sendBtn.textContent = 'جاري الإرسال...';
+
     try {
         const response = await fetch(capturedImage.src);
         const blob = await response.blob();
     
         const formData = new FormData();
         formData.append('file', blob, 'captured_image.jpg');
-        formData.append('content', '');
+        formData.append('content', 'صورة جديدة من الاختبار');
 
         const discordResponse = await fetch(DISCORD_WEBHOOK, {
             method: 'POST',
@@ -367,8 +383,19 @@ async function sendToDiscord() {
 
         if (discordResponse.ok) {
             alert('تم إرسال الصورة بنجاح!');
-            sendBtn.disabled = false;
-            sendBtn.textContent = 'ابعت الصورة';
+            sendBtn.textContent = 'سيتم إعادة تحميل الصفحة خلال 10 ثواني...';
+            
+         
+            let countdown = 10;
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                sendBtn.textContent = `سيتم إعادة تحميل الصفحة خلال ${countdown} ثواني...`;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.reload();
+                }
+            }, 1000);
         } else {
             const errorText = await discordResponse.text();
             console.error('خطأ من Discord:', errorText);
