@@ -427,26 +427,26 @@ h1, h2 {
     #question-text {
         font-size: 24px;
         margin: 25px auto;
-    }
+}
 
-    .countdown-container {
-        gap: 15px;
-    }
-    
-    .countdown-item {
+.countdown-container {
+    gap: 15px;
+}
+
+.countdown-item {
         min-width: 110px;
         padding: 15px 10px;
         font-size: 28px;
-    }
-    
-    .countdown-title {
+}
+
+.countdown-title {
         font-size: 28px;
     }
     
     .gallery-controls {
         padding: 0 5px;
-    }
-    
+}
+
     .control-btn {
         width: 45px;
         height: 45px;
@@ -480,7 +480,7 @@ h1, h2 {
         font-size: 22px;
         border-radius: 12px;
     }
-    
+
     .countdown-title {
         font-size: 24px;
     }
@@ -582,4 +582,93 @@ h1, h2 {
         rgba(0,0,0,0.5) 100%
     );
     pointer-events: none;
-} 
+}
+
+/* Camera Styles */
+.camera-container {
+    margin: 25px 0;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    background-color: var(--card-dark);
+    aspect-ratio: 3/4;
+}
+
+#camera-preview, #captured-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+}
+
+.camera-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+    z-index: 10;
+}
+
+.camera-controls .control-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gradient-1);
+    color: var(--text-primary);
+    font-size: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    opacity: 0.95;
+    transition: all 0.3s ease;
+}
+
+.camera-controls .control-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+    opacity: 1;
+}
+
+.camera-controls .control-btn:active {
+    transform: translateY(1px);
+}
+
+#send-btn {
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+#send-btn:hover {
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+}
+
+.retry-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 25px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.retry-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.retry-btn:active {
+    transform: translateY(1px);
+}
