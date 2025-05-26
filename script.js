@@ -95,7 +95,7 @@ function updateCountdown() {
                     <div class="countdown-item">${secondsLeft}<br/>ثانية</div>
                 </div>
                 <div class="birthday-message">
-                    العمر الحالي: ${years} سنة و ${months} شهر و ${days} يوم
+                    العمر الحالي: ${years} سنة و 
                     <br>
                     ${hours} ساعة و ${minutes} دقيقة و ${seconds} ثانية
                 </div>
