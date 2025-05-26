@@ -49,32 +49,70 @@ let countdownInterval;
 const endDate = new Date(new Date().getFullYear(), 4, 26).getTime(); 
 function updateCountdown() {
     const now = new Date().getTime();
-    let timeLeft = endDate - now; 
-    if (timeLeft < 0) {
-        const nextYear = new Date().getFullYear() + 1;
-        timeLeft = new Date(nextYear, 4, 26).getTime() - now;
-    } 
+    const birthDate = new Date(1991, 4, 26).getTime(); // شهر 5 (مايو) يبدأ من 4 في JavaScript
+    
+    // حساب العمر
+    const ageMillis = now - birthDate;
+    const years = Math.floor(ageMillis / (1000 * 60 * 60 * 24 * 365.25));
+    const months = Math.floor((ageMillis % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
+    const days = Math.floor((ageMillis % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((ageMillis % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((ageMillis % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((ageMillis % (1000 * 60)) / 1000);
+
+    // حساب الوقت المتبقي حتى عيد الميلاد القادم
+    const nextBirthday = new Date(new Date().getFullYear(), 4, 26);
+    if (nextBirthday.getTime() < now) {
+        nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
+    }
+    const timeLeft = nextBirthday.getTime() - now;
+
+    const countdownHTML = document.getElementById('countdown');
+    
+    // التحقق مما إذا كنا في صفحة الصور
+    const isGalleryScreen = document.getElementById('gallery-screen').style.display === 'block';
+    
+    if (!isGalleryScreen) {
+        countdownHTML.style.display = 'none';
+        return;
+    } else {
+        countdownHTML.style.display = 'block';
+    }
+
     if (timeLeft > 0) {
-        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-        document.getElementById('countdown').innerHTML = `
-            <div class="countdown-title">الوقت المتبقي حتى عيد الميلاد 🎂</div>
-            <div class="countdown-container">
-                <div class="countdown-item">${hours} ساعة</div>
-                <div class="countdown-item">${minutes} دقيقة</div>
-                <div class="countdown-item">${seconds} ثانية</div>
+        const daysLeft = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const hoursLeft = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const secondsLeft = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        countdownHTML.innerHTML = `
+            <div class="countdown-section">
+                <div class="countdown-title">الوقت المتبقي حتى عيد الميلاد 🎂</div>
+                <div class="countdown-container">
+                    <div class="countdown-item">${daysLeft}<br/>يوم</div>
+                    <div class="countdown-item">${hoursLeft}<br/>ساعة</div>
+                    <div class="countdown-item">${minutesLeft}<br/>دقيقة</div>
+                    <div class="countdown-item">${secondsLeft}<br/>ثانية</div>
+                </div>
+                <div class="birthday-message">
+                    العمر الحالي: ${years} سنة و ${months} شهر و ${days} يوم
+                    <br>
+                    ${hours} ساعة و ${minutes} دقيقة و ${seconds} ثانية
+                </div>
             </div>
-            <div class="birthday-message">26 مايو 1991</div>
         `;
     } else {
-        clearInterval(countdownInterval);
-        document.getElementById('countdown').innerHTML = `
-            <div class="celebration-message">
-                <h2>عيد ميلاد سعيد! 🎉🎂</h2>
-                <p>كل عام وأنتِ بخير يا مس آية قنديل!</p>
-                <div class="birthday-message">34 سنه</div>
+        countdownHTML.innerHTML = `
+            <div class="countdown-section">
+                <div class="celebration-message">
+                    <h2>عيد ميلاد سعيد! 🎉🎂</h2>
+                    <p>كل عام وأنتِ بخير يا مس آية قنديل!</p>
+                    <div class="birthday-message">
+                        العمر: ${years} سنة و ${months} شهر و ${days} يوم
+                        <br>
+                        ${hours} ساعة و ${minutes} دقيقة و ${seconds} ثانية
+                    </div>
+                </div>
             </div>
         `;
     }
@@ -288,11 +326,16 @@ function retryPhoto() {
     const captureBtn = document.querySelector('.control-btn[onclick="capturePhoto()"]');
     const retryBtn = document.querySelector('.control-btn[onclick="retryPhoto()"]');
     const sendBtn = document.getElementById('send-btn');
+    
     video.style.display = 'block';
     capturedImage.style.display = 'none';
     captureBtn.style.display = 'block';
     retryBtn.style.display = 'none';
     sendBtn.style.display = 'none';
+    
+    // إعادة تعيين حالة زر الإرسال
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'ابعت الصورة';
 }
 function restartCamera() {
     const video = document.getElementById('camera-preview');
